@@ -4,11 +4,19 @@ const authRoutes = require("../routes/authroute");
 const bookingRoutes = require("../routes/BookingRoute");
 const contactRoutes = require("../routes/ContactRoute");
 const statsRoute = require("../routes/dashboard.routes")
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "https://delish-six.vercel.app"] ,
+        credentials:true
+    })
+)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/booking', bookingRoutes);
