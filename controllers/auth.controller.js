@@ -67,7 +67,13 @@ const loginUser = async (req, res) => {
         role: User.role,
        }, process.env.JWT_SECRET)
 
-       res.cookie("token" , token);
+       res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",  // prod me true, local me false
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    path: "/",
+    maxAge: 24 * 60 * 60 * 1000
+});
 
          res.status(200).json({
             message: "User logged in successfully",
